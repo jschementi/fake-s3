@@ -453,7 +453,11 @@ module FakeS3
       s_req.is_path_style = true
 
       if !@root_hostnames.include?(host)
-        s_req.bucket = host.split(".")[0]
+        if host.include?('.s3.localhost')
+          s_req.bucket = host.split('.s3.localhost')[0]
+        else
+          s_req.bucket = host.split(".")[0]
+        end
         s_req.is_path_style = false
       end
 
